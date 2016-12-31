@@ -47,7 +47,7 @@ module.exports = {
     ]
   },
   resolve: {
-    modules:[path.resolve(__dirname, 'component'),'node_modules'],
+    modules:['node_modules'],
     extensions: ['.js', '.json','.vue','.css','.scss'],
     alias: {
       'vue$': 'vue/dist/vue.min.js'

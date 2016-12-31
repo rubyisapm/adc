@@ -2,8 +2,8 @@
  * @author rubyisapm
  */
 
-import List from 'list';
-import AutoComplete from 'autoComplete';
+import List from './component/list/index.js';
+import AutoComplete from './component/autoComplete/index.js';
 import Vue from 'vue';
 const install = function install() {
     Vue.component(List.name, List);
