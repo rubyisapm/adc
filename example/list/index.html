@@ -7,14 +7,15 @@
     <link href="http://static.tcy365.com/cdn/bootstrap/3.3.5/css/theme.css" rel="stylesheet">
   </head>
   <body>
-    <div id="app">
-      <list></list>
-      <auto-complete></auto-complete>
+
+    <div id="list">
+      <list :data="data" :theads="theads" :loading="loading" :response-status="responseStatus" :config="config" :operations="operations"></list>
     </div>
+
+
     <script src="http://static.tcy365.com/cdn/jquery/2.1.0/jquery.js"></script>
     <script src="http://static.tcy365.com/cdn/bootstrap/3.3.5/js/bootstrap.min.js"></script>
     <script src="http://static.tcy365.com/cdn/bootstrap-page/1.0.0/page.min.js"></script>
-    <script src="http://static.tcy365.com/cdn/popover-confirm/1.1.0/popover-confirm-umd.js"></script>
-    <script src="/asset/index.bundle.js"></script>
+    <script src="/asset/list.bundle.js"></script>
   </body>
 </html>

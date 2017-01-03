@@ -3,7 +3,8 @@ var webpack = require('webpack');
 
 module.exports = {
   entry: {
-    index:'./example/index.js'
+    list:'./example/list/index.js',
+    autoComplete:'./example/auto-complete/index.js'
   },
   output: {
     path: path.resolve(__dirname, './asset'),
