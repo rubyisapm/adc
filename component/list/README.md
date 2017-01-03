@@ -20,7 +20,7 @@ Vue.component(autoComplete.name,autoComplete);
 ## 参数说明
 
 参数|描述|类型|默认值
-- | - | - | - |
+--- | --- | --- | --- |
 loading | 加载状态 | Boolean | false
 responseStatus | 响应状态 | Boolean | true
 colgroup | 每列的宽度 | Array | []
@@ -36,7 +36,7 @@ data | 表格数据 | Array | []
 #### 配置项
 
 参数 | 描述 | 类型 | 必填 | 默认
-- | - | - | - | - | 
+--- | --- | --- | --- | --- | 
 icon | 操作按钮中的图标 | String | 否 | 无
 text | 操作按钮的文字 | String | 是 | 无
 action | 操作按钮的click事件回调 | Function | 否 | 无
@@ -74,7 +74,7 @@ SignInConfigType:{
 ##### 配置项
 
 参数 | 描述 | 类型 | 必填 | 默认
-- | - | - | - | - | 
+--- | --- | --- | --- | --- | 
 className | 数据渲染时要添加的类名，比如把内容显示为红色 | String | 否 | 无
 text | 显示内容 | String | 否 | 无
 
@@ -103,7 +103,7 @@ Url: function (value) {
 #### 配置项
 
 参数 | 描述 | 类型 | 必填 | 默认
-- | - | - | - | - | 
+--- | --- | --- | --- | --- | 
 key | 对应的字段名 | String | 是 | 无
 name | 表头名称 | String | 是 | 无
 filter | 全局过滤器名称 | String | 否 | 无
