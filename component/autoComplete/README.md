@@ -19,8 +19,8 @@ Vue.component(AutoComplete.name,AutoComplete);
 ```
 ## 参数说明
 
-参数|描述|类型|默认值
-- | - | - | - |
+参数|描述|类型|默认值 |
+- | - | - | - | -
 allForEmpty | 是否在input没有输入的情况下展示所有数据 | Boolean | true
 list | 该组件需要使用的源数据 | Array | []
 keys | 需要在每项数据中显示出来的属性，这些属性值以|分隔 | Array | ['Id','Name']
