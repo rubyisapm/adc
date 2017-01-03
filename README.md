@@ -1,8 +1,8 @@
 # adc
 
-> A Vue.js project
+用于admin系统的vuejs组件
 
-## Build Setup
+## 运行
 
 ``` bash
 # install dependencies
@@ -15,4 +15,9 @@ npm run dev
 npm run build
 ```
 
-For detailed explanation on how things work, consult the [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 安装
+
+```
+npm install ct-adc
+```
+
