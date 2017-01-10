@@ -60,7 +60,6 @@
                             {{operation.text}}
                         </a>
                     </template>
-
                 </td>
             </tr>
         </template>

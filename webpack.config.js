@@ -4,7 +4,8 @@ var webpack = require('webpack');
 module.exports = {
   entry: {
     list:'./example/list/index.js',
-    autoComplete:'./example/auto-complete/index.js'
+    autoComplete:'./example/auto-complete/index.js',
+    page:'./example/page/index.js'
   },
   output: {
     path: path.resolve(__dirname, './asset'),

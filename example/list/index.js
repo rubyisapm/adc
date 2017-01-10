@@ -58,8 +58,8 @@ new Vue({
             }
         ],
         config: {
-            Url: function (value) {
-                return '<img width="100" height="100" src="' + value + '"/>';
+            Url: function (value,index) {
+                return '<img width="100" height="100" src="' + value + '"/><img ref="'+index+'dd'+'" width="100" height="100" style="display:none" src="' + value + '"/>';
             },
             Status:{
                 1:{
@@ -71,6 +71,9 @@ new Vue({
                     text:'停用'
                 }
             }
+        },
+        interactions:{
+
         },
         operations: [
             {
