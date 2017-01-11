@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="visible">
         <div class="form-group" style="float: left;" v-if="form">
             共<strong>{{totalNum}}</strong>条记录，
             第<strong>{{currPage}}</strong>/<strong>{{pageNum}}</strong>页
@@ -115,8 +115,7 @@
             },
             visible(){
                 //页面是否可见
-                var num = parseInt(this.currPage);
-                return num || this.totalNum <= this.pageLen;
+                return this.pageNum===0;
             },
             previousStatus(){
                 var num = parseInt(this.currPage);
