@@ -115,7 +115,7 @@
             },
             visible(){
                 //页面是否可见
-                return this.pageNum===0;
+                return this.pageNum>0;
             },
             previousStatus(){
                 var num = parseInt(this.currPage);
@@ -180,13 +180,13 @@
             previous(){
                 if (this.currPage > 1) {
                     this.currPage = this.currPage - 1;
-                    this.$emit('change-page', this.currPage - 1);
+                    this.$emit('change-page', this.currPage);
                 }
             },
             next(){
                 if (this.currPage < this.pageNum) {
                     this.currPage = this.currPage + 1;
-                    this.$emit('change-page', this.currPage + 1);
+                    this.$emit('change-page', this.currPage);
                 }
             },
             getPage(page){
