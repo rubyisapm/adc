@@ -29,7 +29,7 @@
 
             <div style="display: inline-block;" class="d-pages-form form-inline ml10" v-if="form">
                 到第 <input class="d-pages-form-input form-control input-sm" style="width:60px;" type="number" v-model="jumpTo" min="1"> 页
-                <a class="d-pages-form-btn btn btn-sm btn-primary" href="javascript:;" @click="jumpTo">确定</a>
+                <a class="d-pages-form-btn btn btn-sm btn-primary" href="javascript:;" @click="jump">确定</a>
             </div>
         </div>
     </div>
