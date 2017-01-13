@@ -2,20 +2,20 @@
     <div v-if="visible">
         <div class="form-group" style="float: left;" v-if="form">
             共<strong>{{totalNum}}</strong>条记录，
-            第<strong>{{currPage}}</strong>/<strong>{{pageNum}}</strong>页
+            第<strong>{{currentPage}}</strong>/<strong>{{pageNum}}</strong>页
         </div>
         <div :style="form ? {float:'right'} : {}">
             <ul class="pagination">
                 <li class="previous" :class="previousStatus" @click="previous"><a href="javascript:;">&laquo;</a></li>
 
                 <template v-for="i in pageList.firstStep">
-                    <li @click="getPage(i)"><a href="javascript:;">{{i+1}}</a></li>
+                    <li @click="getPage(i)"><a href="javascript:;">{{i}}</a></li>
                 </template>
 
                 <li v-if="pageList.firstDot" class="disabled"><a href="javascript:;">...</a></li>
 
                 <template v-for="i in pageList.secondStep">
-                    <li v-if="i===currPage" class="active"><a href="javascript:;">{{i}}</a></li>
+                    <li v-if="i===currentPage" class="active"><a href="javascript:;">{{i}}</a></li>
                     <li v-else @click="getPage(i)"><a href="javascript:;">{{i}}</a></li>
                 </template>
 
@@ -106,7 +106,8 @@
         },
         data(){
             return {
-                jumpTo: ''
+                jumpTo: '',
+                currentPage:this.currPage
             }
         },
         computed: {
@@ -118,13 +119,13 @@
                 return this.pageNum>0;
             },
             previousStatus(){
-                var num = parseInt(this.currPage);
+                var num = parseInt(this.currentPage);
                 return num <= 1 ? 'disabled' : '';
             },
             pageList(){
                 var pageNum = this.pageNum,
                         spage = this.spage,
-                        num = parseInt(this.currPage),
+                        num = parseInt(this.currentPage),
                         arr = listArr(num, pageNum, spage),
                         len = arr.length,
                         firstStep = [],
@@ -163,7 +164,7 @@
 
             },
             nextStatus(){
-                var num = parseInt(this.currPage),
+                var num = parseInt(this.currentPage),
                         pageNum = this.pageNum;
                 return num >= pageNum ? 'disabled' : '';
             }
@@ -174,24 +175,32 @@
                 if (inputNum > this.pageNum) {
                     inputNum = this.pageNum;
                 }
-                this.currPage = inputNum;
+                this.currentPage = inputNum;
                 this.$emit('change-page', inputNum);
             },
             previous(){
-                if (this.currPage > 1) {
-                    this.currPage = this.currPage - 1;
-                    this.$emit('change-page', this.currPage);
+                if (this.currentPage > 1) {
+                    this.currentPage = this.currentPage - 1;
+                    this.jumpTo=this.currentPage;
+                    this.$emit('change-page', this.currentPage);
                 }
             },
             next(){
-                if (this.currPage < this.pageNum) {
-                    this.currPage = this.currPage + 1;
-                    this.$emit('change-page', this.currPage);
+                if (this.currentPage < this.pageNum) {
+                    this.currentPage = this.currentPage + 1;
+                    this.jumpTo=this.currentPage;
+                    this.$emit('change-page', this.currentPage);
                 }
             },
             getPage(page){
-                this.currPage = page;
+                this.currentPage = page;
+                this.jumpTo=this.currentPage;
                 this.$emit('change-page', page);
+            }
+        },
+        watch:{
+            jumpTo(newVal){
+                this.jumpTo=(newVal+'').replace(/(^0|\D)/g,'');
             }
         }
 

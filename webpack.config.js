@@ -52,7 +52,7 @@ module.exports = {
     modules:['node_modules'],
     extensions: ['.js', '.json','.vue','.css','.scss'],
     alias: {
-      'vue$': 'vue/dist/vue.min.js'
+      'vue$': 'vue/dist/vue.common.js'
     }
   },
   devServer: {
