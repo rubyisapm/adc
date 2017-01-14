@@ -108,7 +108,25 @@ config默认有三个参数，分别是value/item/index，分别表示该项数�
 key | 对应的字段名 | String | 是 | 无
 name | 表头名称 | String | 是 | 无
 filter | 全局过滤器名称 | String | 否 | 无
-component | 该列数据用到的组件名称 | Object | 否 | 无
+component | 该列数据用到的组件名称[见下方详细信息] | Object | 否 | 无
+
+### theads[i].component
+
+此项用于配置表格中的组件级渲染,对应thead的component配置项；
+
+#### 配置项
+参数 | 描述 | 类型 | 必填 | 默认
+--- | --- | --- | --- | --- | 
+name | 指定组件的名称[参见内置组件列表] | String | 是 | 无
+props | 指定传入组件的props | Object | 否 | 无
+
+### 其他说明 
+
+#### 内置组件列表
+
+组件名称 | 组件说明
+--- | --- |
+img | 用于图片项的渲染，该组件会将图片渲染为一张可自定义尺寸的图片，图片的hover用于展示图片的原图
 
 
 ## Q & A
@@ -133,3 +151,22 @@ function(item){
 }
 ```
 那么只有该条数据的Status字段为1时才会显示相应的操作按钮；
+
+3.theads中的项是否需要和数据中的key一一对应？
+
+不需要。
+举例说明：如果数据中有BeginTime和EndTime两个字段，但是实际渲染时，想显示一列"起始时间"。
+那么，可以在theads中配置一列:
+```
+{
+    key:'ShowTime',
+    name:'显示时间'
+}
+```
+并在config中设置该列实际的内容：
+```
+ShowTime:function(value,item,index){
+    return item.BeginTime+'-'+item.EndTime;
+}
+```
+那么实际渲染时，list组件会显示一列"起始时间"，内容为BeginTime-EndTime。
