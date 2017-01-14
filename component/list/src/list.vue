@@ -16,35 +16,45 @@
         <tbody>
         <template v-if="loading">
             <tr>
-                <td :colspan="operations.length>0 ? theads.length+1 : theads.length">
+                <td :colspan="colspan">
                     <div class="loading" style="height:300px"></div>
                 </td>
             </tr>
         </template>
         <template v-else-if="!responseStatus">
-            <tr v-if="!loading && !responseStatus">
-                <td :colspan="operations.length>0 ? theads.length+1 : theads.length" class="text-center">请求出错!</td>
-            </tr>
+            <td :colspan="colspan" class="text-center">请求出错!</td>
         </template>
         <template v-else>
             <tr v-if="data.length===0">
-                <td :colspan="operations.length>0 ? theads.length+1 : theads.length" class="text-center">没有信息!</td>
+                <td :colspan="colspan" class="text-center">没有信息!</td>
             </tr>
             <tr v-for="(item,index) in data">
                 <td v-for="thead in theads">
-                    <span v-if="typeof config[thead.key]==='function'" v-html="config[thead.key](item[thead.key],index)">
+                    <!--config是一个自定义函数 接收参数为:该处的原始value值/该项数据/该项数据在原数组中的索引-->
+                    <span v-if="typeof config[thead.key]==='function'" v-html="config[thead.key](item[thead.key],item,index)">
                     </span>
-                    <span v-else-if="typeof config[thead.key]==='object' && item[thead.key]!=='' && item[thead.key]!=null"
-                          :class="typeof config[thead.key][item[thead.key]]!='undefined' ?  config[thead.key][item[thead.key]].className : ''">
-                        {{typeof config[thead.key][item[thead.key]]!='undefined' ? config[thead.key][item[thead.key]].text : ''}}
+                    <!--config是一个对象，其中定义了某个值应该被显示出来的真正内容-->
+                    <span v-else-if="renderByConfigItem(item,thead.key)"
+                          :class="configItemClassName(item,thead.key)">
+                        {{configItemContent(item,thead.key)}}
                     </span>
-                    <template v-else="typeof config[thead.key]==='undefined'">
-                        <template v-if="typeof thead.filter!=='undefined'">
+                    <!--td的显示内容需要使用公用的filter-->
+                    <template v-else-if="renderByFilter(thead.key,thead.filter)">
                             {{item[thead.key] | privateFilter(thead.filter,index)}}
+                    </template>
+
+                    <template v-else-if="typeof thead.component!=='undefined' && thead.component.name==='img'">
+                        <template v-if="typeof thead.component.props!=='undefined'">
+                            <td-img :img-src="item[thead.key]" :width="thead.component.props.width" :height="thead.component.props.height"></td-img>
                         </template>
                         <template v-else>
-                            {{item[thead.key]}}
+                            <td-img :img-src="item[thead.key]"></td-img>
                         </template>
+                    </template>
+
+                    <!--常规显示-->
+                    <template v-else>
+                        {{item[thead.key]}}
                     </template>
                 </td>
                 <td>
@@ -70,8 +80,12 @@
 
 <script type="es6">
     import Vue from 'vue';
+    import Img from './img.vue';
     export default{
         name:'list',
+        components:{
+            'td-img':Img
+        },
         props: {
             loading: {
                 //表格的加载状态
@@ -99,9 +113,9 @@
             },
             config: {
                 //表格的数据渲染配置
-                type: Array,
+                type: Object,
                 default(){
-                    return [];
+                    return {};
                 }
             },
             theads: {
@@ -133,6 +147,25 @@
                 }else{
                     return value;
                 }
+            }
+        },
+        computed:{
+            colspan(){
+                return this.operations.length>0 ? this.theads.length+1 : this.theads.length;
+            }
+        },
+        methods:{
+            renderByConfigItem(item,key){
+                return typeof this.config[key]==='object' && item[key]!=='' && item[key]!=null;
+            },
+            configItemClassName(item,key){
+                return typeof this.config[key][item[key]]!='undefined' ?  this.config[key][item[key]].className : '';
+            },
+            configItemContent(item,key){
+                return typeof this.config[key][item[key]]!=='undefined' ? this.config[key][item[key]].text : '';
+            },
+            renderByFilter(key,filter){
+                return typeof this.config[key]==='undefined' && typeof filter!=='undefined';
             }
         }
     }

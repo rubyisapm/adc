@@ -25,6 +25,7 @@
     "$": false,
     "Vue":false,
     "MiniMsg":false,
-    "window":false
+    "window":false,
+    "alert":false
   }
 }

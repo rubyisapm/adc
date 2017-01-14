@@ -16,7 +16,7 @@ const install = function install() {
 // 当vuejs是直接引入时，自动安装
 if (typeof window !== 'undefined' && window.Vue) {
     install(window.Vue);
-};
+}
 
 module.exports={
     install,

@@ -13,7 +13,6 @@ Vue.filter('dateTimeBToF', function (value) {
 });
 new Vue({
     el: '#list',
-
     data: {
         theads: [
             {
@@ -25,6 +24,20 @@ new Vue({
                 key: 'EndTime',
                 name: '结束时间',
                 filter: 'dateTimeBToF'
+            },
+            {
+                key:'ShowTime',
+                name:'显示时间'
+            },
+            {
+                key:'ImgUrl',
+                name:'图片地址',
+                component:{
+                    name:'img',
+                    props:{
+                        width:120
+                    }
+                }
             },
             {
                 key: 'H5Url',
@@ -47,6 +60,7 @@ new Vue({
                 EndTime: '20160103',
                 H5Url: 'http://www.baidu.com',
                 Url: 'http://www.baidu.com',
+                ImgUrl: 'http://photocdn.sohu.com/20170113/Img478630902.jpg',
                 Status:1
             },
             {
@@ -54,12 +68,16 @@ new Vue({
                 EndTime: '20160103',
                 H5Url: 'http://www.baidu.com',
                 Url: 'http://www.baidu.com',
+                ImgUrl: 'http://photocdn.sohu.com/20170113/Img478630902.jpg',
                 Status:2
             }
         ],
         config: {
-            Url: function (value,index) {
+            Url: function (value,item,index) {
                 return '<img width="100" height="100" src="' + value + '"/><img ref="'+index+'dd'+'" width="100" height="100" style="display:none" src="' + value + '"/>';
+            },
+            ShowTime:function(value,item,index){
+                return item.BeginTime+'-'+item.EndTime;
             },
             Status:{
                 1:{
@@ -71,9 +89,6 @@ new Vue({
                     text:'停用'
                 }
             }
-        },
-        interactions:{
-
         },
         operations: [
             {
@@ -100,5 +115,17 @@ new Vue({
                 }
             }
         ]
+    }
+});
+
+import TdImg from '../../component/list/src/img.vue';
+
+new Vue({
+    el:'#td',
+    components:{
+        'td-img':TdImg
+    },
+    data:{
+        imgSrc:'http://photocdn.sohu.com/20170113/Img478630902.jpg'
     }
 });
