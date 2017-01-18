@@ -25,10 +25,12 @@ var list=[
 var a=new Vue({
     el:'#app',
     data:{
-        list:list,
+        list:[],
         keys:['Id','Name'],
        matchKeys:['Id','Name'],
-        allForEmpty:false
+        showKeys:['Name'],
+        allForEmpty:false,
+        value:{Id:1}
     },
     methods:{
         select:function(item){
@@ -39,3 +41,7 @@ var a=new Vue({
         }
     }
 });
+
+setTimeout(function(){
+    a.list=list;
+},3000);

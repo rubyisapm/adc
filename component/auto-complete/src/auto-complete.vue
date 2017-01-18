@@ -52,7 +52,13 @@
             showKeys: {
                 type: Array,
                 default(){
-                    return ['Id','Name'];
+                    return ['Id', 'Name'];
+                }
+            },
+            value:{
+                type:Object,
+                default(){
+                    return {};
                 }
             }
         },
@@ -63,13 +69,15 @@
                 selected: {}
             }
         },
+        created(){
+            this.selected=this.value;
+        },
         mounted(){
-            var that = this;
-            window.addEventListener('click', function (event) {
-                if (event.target != that.$refs.input) {
-                    that.listVisible = false;
-                }
-            })
+            this.input=this.selectedContent;
+            window.addEventListener('click', this.clickHandler);
+        },
+        beforeDestroy(){
+            window.removeEventListener('click',this.clickHandler);
         },
         computed: {
             matched(){
@@ -80,9 +88,9 @@
                             return (item[key] + '').indexOf(that.input) > -1;
                         })
                     })
-                }else if(that.allForEmpty){
+                } else if (that.allForEmpty) {
                     return that.list;
-                }else{
+                } else {
                     return [];
                 }
             },
@@ -93,28 +101,72 @@
                 } else {
                     return '没有匹配的内容！';
                 }
+            },
+            selectedContent(){
+                var content = [];
+                var that=this;
+                that.showKeys.map(function (key) {
+                    content.push(that.selected[key]);
+                })
+                return content.join('|');
             }
         },
         methods: {
+            clickHandler(event){
+                var that=this;
+                if (event.target != that.$refs.input) {
+                    that.listVisible = false;
+                }
+                if (that.input === '') {
+                    that.selected = {};
+                } else {
+                    that.input = that.selectedContent;
+                }
+            },
             focus(){
                 this.listVisible = true;
             },
             select(item){
-                var input=[];
-                this.showKeys.map(function(key){
-                    input.push(item[key]);
-                })
-                this.input=input.join('|');
-                this.$emit('select', item);
-                if (JSON.stringify(item) !== JSON.stringify(this.selected)) {
-                    this.$emit('change', item);
+                this.selected = item;
+                this.input = this.selectedContent;
+                this.$emit('select',JSON.parse(JSON.stringify(this.selected)));
+            },
+            completeBrokenValue(){
+                var that=this;
+                var selected=that.selected;
+                var listIsNotEmpty=that.list.length>0;
+                var selectedIsBroken=listIsNotEmpty && Object.keys(that.list[0]).length>Object.keys(selected).length;
+
+                if(selectedIsBroken){
+                    //当value相比list是不完整对象时，根据list修正这个对象
+                    var targetItems=that.list.filter(function(item){
+                        var keysInSelected=Object.keys(selected);
+                        var matchItems=keysInSelected.filter(function(i){
+                            return selected[i]===item[i];
+                        })
+                        return matchItems.length>0;
+                    });
+                    that.selected=targetItems[0];
+                    that.input=that.selectedContent;
                 }
             }
+        },
+        watch:{
+            selected(newVal,oldVal){
+                if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+                    this.$emit('change', JSON.parse(JSON.stringify(newVal)));
+                }
+
+                this.completeBrokenValue();
+            },
+            list(){
+                this.completeBrokenValue();
+            }
         }
-    }
+    };
 </script>
 <link href="http://static.uc108.com/cdn/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
-<style>
+<style scoped>
     .autoComplete .dropdown-menu {
         width: 100%;
         max-height: 400px;

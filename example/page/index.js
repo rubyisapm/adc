@@ -15,5 +15,10 @@ new Vue({
         pageLen:20,
         totalNum:1000,
         form:true
+    },
+    methods:{
+        changeCurr(){
+            this.currPage=1;
+        }
     }
 });

@@ -3,13 +3,15 @@
  */
 
 import List from './component/list/index.js';
-import AutoComplete from './component/autoComplete/index.js';
+import AutoComplete from './component/auto-complete/index.js';
 import Page from './component/page/index.js';
+import LLTransfer from './component/transfer/index.js';
 import Vue from 'vue';
 const install = function install() {
     Vue.component(List.name, List);
     Vue.component(AutoComplete.name, AutoComplete);
     Vue.component(Page.name, Page);
+    Vue.component(LLTransfer.name, LLTransfer);
 };
 
 // auto install
@@ -22,7 +24,8 @@ module.exports={
     install,
     List,
     AutoComplete,
-    Page
+    Page,
+    LLTransfer
 };
 
 
