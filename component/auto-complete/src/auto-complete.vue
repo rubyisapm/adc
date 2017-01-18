@@ -165,7 +165,6 @@
         }
     };
 </script>
-<link href="http://static.uc108.com/cdn/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet">
 <style scoped>
     .autoComplete .dropdown-menu {
         width: 100%;
